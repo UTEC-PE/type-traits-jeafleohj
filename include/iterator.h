@@ -17,17 +17,17 @@ public:
 	T operator*();
 };  
 
-template <typename T
-Iterator<T> Iterator<T>operator=(Iterator<T> other){
+template <typename T>
+Iterator<T> Iterator<T>::operator=(Iterator<T> other){
 	current = other.current;
 	return *this;
 }
 template <typename T>
-bool Iterator<T>operator!=(Iterator<T> other){
+bool Iterator<T>::operator!=(Iterator<T> other){
 	return current != other.current;
 }
 template <typename T>
-T Iterator<T>operator*(){
+T Iterator<T>::operator*(){
 	return current->data;
 }
 #endif
