@@ -9,11 +9,11 @@ public:
 	DListIterator() : Iterator<T>() {};
 	DListIterator(Node<T> *current) : Iterator<T>(current) {};
 	DListIterator<T> operator++(){
-		current = current->next;
+		this->current = this->current->next;
 		return *this;
 	};
 	DListIterator<T> operator--(){
-		current = current->prev;
+		this->current = this->current->prev;
 		return *this;
 	};
 };
@@ -34,29 +34,29 @@ public:
 	};
 
 	void push_front(T data) {
-		Node<T>* node = new Node<T>;
-		node->data = data;
+		Node<T>* node = new Node<T>(data);
+		node->prev = nullptr;
 		if( head ){
-			node->next = node->prev = nullptr;
-			head = tail = node;
-		}else{
-			node->next = head;
 			head->prev = node;
-			head = node;
+			node->next = head;
+		}else{
+			node->next = nullptr;
+			tail = node;
 		}
+		head = node;
 	}
 
 	void push_back(T data) {
-		Node<T>* node = new Node<T>;
-		node->data = data;
+		Node<T>* node = new Node<T>(data);
+		node->next = nullptr;
 		if( head ){
-			node->next = node->prev = nullptr;
-			head = tail = node;				
-		}else{
 			node->prev = tail;
 			tail->next = node;
-			tail = node;
+		}else{
+			node->prev = nullptr;
+			head = node;
 		}
+		tail = node;
 	}
              
 	void pop_front() {
@@ -78,12 +78,12 @@ public:
 	}
              
 	iterator begin() {
-		Iterator<T> b(head);
+		iterator b(head);
 		return b;
 	}
              
 	iterator end() {
-		Iterator<T> e(tail);
+		iterator e(nullptr);
 		return e;
 	}
              
