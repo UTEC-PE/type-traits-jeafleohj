@@ -34,12 +34,13 @@ public:
 
 	bool find(T search, Node<T> **&pointer) {
 		pointer = &head;
-		if( *pointer){
-			while ( (*pointer)->next && cmp( (*pointer)->next->data, search) ) {
-				pointer = &((*pointer)->next);
+		while ( (*pointer) && cmp( (*pointer)->data, search) ) {
+			if( (*pointer)->data == search ){
+				return true;
 			}
+			pointer = &((*pointer)->next);
 		}
-		return ((*pointer))&&( (*pointer)->data == search);
+		return false;
 	}
              
 	bool insert(T data) {
@@ -48,11 +49,10 @@ public:
 			return false;
 		}
 		Node<T> *node = new Node<T>(data);
-		if( (*pos) ){
-			node->next = (*pos)->next;
-			(*pos)->next = node;
+		if( (*pos) != head ){
+			node->next = (*pos);
+			(*pos) = node;
 		}else{
-			node->next = nullptr;
 			head = node;
 		}
 		return true;
